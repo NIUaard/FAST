@@ -1,0 +1,72 @@
+!
+! General Elements
+!
+EPD_SIZE:  MAXAMP, X_MAX=2.5e-2, Y_MAX=2.5e-2
+!
+! EPD Drifts
+!
+d_B604_X604:	drift,L=0.079500
+d_X604_Q604:	drift,L=0.289985
+d_Q604_Q605:	drift,L=0.138000
+d_Q605_V605:	drift,L=0.232620
+d_V605_H605:	drift,L=0.250000
+d_H605_B605:	drift,L=0.228450
+d_B605_X605:	drift,L=0.118600
+d_X605_B609:	drift,L=5.012066
+d_B609_X609:	drift,L=0.118600
+d_X609_Q609:	drift,L=0.250750
+d_Q609_Q610:	drift,L=0.138000
+d_Q610_V610:	drift,L=0.232620
+d_V610_H610:	drift,L=0.250000
+d_H610_B610:	drift,L=0.468789
+d_B610_X610:	drift,L=0.079500
+d_X610_Q611:	drift,L=2.007601
+d_Q611_Q612:	drift,L=0.138000
+d_Q612_V612:	drift,L=0.232620
+d_V612_H612:	drift,L=0.250000
+d_H612_B612:	drift,L=0.221000
+d_B612_X612:	drift,L=0.079500
+d_X612_T612:	drift,L=0.159000
+d_T612_B613:	drift,L=0.341530
+d_B613_X613:	drift,L=0.118600
+d_X613_MK_End_Flange:	drift,L=2.807600
+!
+! EPD Elements
+!
+B604:	moni, group=BPM,DX=0.000000,DY=0.000000
+X604:	watch,filename="%s.X604", group=IMG
+Q604:	quad,L=0.417,k1=1e-50,DX=0.000000,DY=0.000000
+Q605:	quad,L=0.417,k1=1e-50,DX=0.000000,DY=0.000000
+V605:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+H605:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+B605:	moni, group=BPM,DX=0.000000,DY=0.000000
+X605:	watch,filename="%s.X605", group=IMG
+B609:	moni, group=BPM,DX=0.000000,DY=0.000000
+X609:	watch,filename="%s.X609", group=IMG
+Q609:	quad,L=0.417,k1=1e-50,DX=0.000000,DY=0.000000
+Q610:	quad,L=0.417,k1=1e-50,DX=0.000000,DY=0.000000
+V610:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+H610:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+B610:	moni, group=BPM,DX=0.000000,DY=0.000000
+X610:	watch,filename="%s.X610", group=IMG
+Q611:	quad,L=0.417,k1=1e-50,DX=0.000000,DY=0.000000
+Q612:	quad,L=0.417,k1=1e-50,DX=0.000000,DY=0.000000
+V612:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+H612:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+B612:	moni, group=BPM,DX=0.000000,DY=0.000000
+X612:	watch,filename="%s.X612", group=IMG
+T612:	mark
+B613:	moni, group=BPM,DX=0.000000,DY=0.000000
+X613:	watch,filename="%s.X613", group=IMG
+MK_End_Flange:	mark
+
+EPD:	Line=( EPD_SIZE, &
+			B604,d_B604_X604,X604,d_X604_Q604,Q604,d_Q604_Q605, &
+			Q605,d_Q605_V605,V605,d_V605_H605,H605,d_H605_B605, &
+			B605,d_B605_X605,X605,d_X605_B609,B609,d_B609_X609, &
+			X609,d_X609_Q609,Q609,d_Q609_Q610,Q610,d_Q610_V610, &
+			V610,d_V610_H610,H610,d_H610_B610,B610,d_B610_X610, &
+			X610,d_X610_Q611,Q611,d_Q611_Q612,Q612,d_Q612_V612, &
+			V612,d_V612_H612,H612,d_H612_B612,B612,d_B612_X612, &
+			X612,d_X612_T612,T612,d_T612_B613,B613,d_B613_X613, &
+			X613,d_X613_MK_End_Flange,EPD_SIZE )

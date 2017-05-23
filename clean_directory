@@ -1,0 +1,1 @@
+rm *iter* *cen *fin *mag* *.mat* *.s *.sur*  *.twi *.X* *.param *out *.saved_lattice *GONI

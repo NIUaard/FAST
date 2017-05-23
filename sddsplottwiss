@@ -1,0 +1,2 @@
+sddsplot $3 -legend -column=s,betax -column=s,betay -graph=line,vary \
+      $1.twi -column=s,Profile -graph=line,type=7 -overlay=xmode=norm,yfact=0.1,yoffset=$2 $1.mag -title='' -topline=' ' $3
