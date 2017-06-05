@@ -41,22 +41,22 @@
 &alter_elements
         name = Q502
         item = K1
-        value = 9
+        value = 1
 &end
 &alter_elements
         name = Q503
         item = K1
-        value = -9
+        value = 1
 &end
 &alter_elements
         name = Q504
         item = K1
-        value = 9
+        value = -1
 &end
 &alter_elements
         name = Q505
         item = K1
-        value = -9
+        value = 1
 &end
 &alter_elements
     name = Q*
@@ -129,7 +129,7 @@
 	magnets="%s.mag"
 	centroid="%s.cen"
 	p_central= "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=pAverage}"
-        default_order = 1
+        default_order = 2
 &end
 
 &floor_coordinates
