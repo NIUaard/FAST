@@ -1,2 +1,0 @@
-rm $1.X*
-rm $1.cen $1.fin $1.mag $1.mat* $1.new $1.out $1.s $1.survey $1.twi 

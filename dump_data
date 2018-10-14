@@ -1,4 +1,0 @@
-sddsprintout -col=s -col=pCentral injector_BC1_LEdumpchan16.cen > energy$1.txt
-sddsprintout -col=s -col=betax -col=betay -col=etax -col=etay injector_BC1_LEdumpchan16.twi > twiss$1.txt
-sddsprintout -col=s -col=Sx -col=Sy -col=Sxp -col=Syp -col=St injector_BC1_LEdumpchan16.s > sigmas$1.txt
-sddsprintout -col=x -col=xp -col=y -col=yp -col=t -col=p injector_BC1_LEdumpchan16.GONI > gonio_phsp$1.txt
