@@ -1,0 +1,172 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! This command file takes the distribution downstream of the HE FOD (produced by cryotoFODOend) and 
+! fit the lattice throughout the EID line up to the dump
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!
+!
+!
+!-------------------------- fit quadrupole before the 500 ssection to make small betatron function at IP 
+!
+!
+!
+
+&run_setup    
+        lattice="All_Lines_edited/LINES.lte"
+	use_beamline="ESD_ICS_IP"
+	default_order = 1
+        parameters = esdicsfit.param
+        final="%s.fin",
+	p_central= "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=pAverage}"
+	
+&end
+
+
+&run_control
+        n_steps = 1
+&end
+
+&twiss_output
+        matched=0
+  	concat_order = 1,        ! for speed
+        beta_x  = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=betax}",
+        beta_y  = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=betay}",
+        alpha_x = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=alphax}",
+        alpha_y = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=alphay}",
+&end
+
+
+&alter_elements
+        name = Q502
+        item = K1
+        value = 1
+&end
+&alter_elements
+        name = Q503
+        item = K1
+        value = 1
+&end
+&alter_elements
+        name = Q504
+        item = K1
+        value = -1
+&end
+&alter_elements
+        name = Q505
+        item = K1
+        value = 1
+&end
+&alter_elements
+    name = Q*
+    item = DX
+    value = 0.0
+&end
+&alter_elements
+    name = Q*
+    item = DY
+    value = 0.0
+&end
+&optimization_setup
+        mode = minimize, method = simplex,
+        target = 1e-12, tolerance = 1e-14,
+        n_passes = 10, n_evaluations = 1500,
+        n_restarts = 4,
+&end
+
+
+&optimization_term
+        term = "FIT_IP_ICS#1.betax    0.01 0.005 sene" 
+&end
+&optimization_term
+        term = "FIT_IP_ICS#1.alphax   0.0 - sqr" 
+&end
+&optimization_term
+        term = "FIT_IP_ICS#1.betay    0.01 0.005 sene" 
+&end
+&optimization_term
+        term = "FIT_IP_ICS#1.alphay   0.01 - sqr" 
+&end
+&optimization_term
+        term = "max.betax 150 10 segt"
+&end
+&optimization_term
+        term = "max.betay 150 10 segt"
+&end
+
+
+
+&optimization_variable
+        name = Q502, item=K1, lower_limit=-30, upper_limit=30, step_size = 1e-4
+&end
+&optimization_variable
+        name = Q503, item=K1, lower_limit=-30, upper_limit=30, step_size = 1e-4
+&end
+&optimization_variable
+        name = Q504, item=K1, lower_limit=-30, upper_limit=30, step_size = 1e-4
+&end
+&optimization_variable
+        name = Q505, item=K1, lower_limit=-30, upper_limit=30, step_size = 1e-4
+&end
+&optimization_variable
+        name = Q507, item=K1, lower_limit=-30, upper_limit=30, step_size = 1e-4
+&end
+&optimization_variable
+        name = Q508, item=K1, lower_limit=-30, upper_limit=30, step_size = 1e-4
+&end
+
+
+&bunched_beam 
+&end
+
+&optimize 
+       summarize_setup=1 
+&end
+
+!
+! check beta in the EID+EPD line line
+!
+&run_setup
+        lattice = "All_Lines_edited/LINES.lte",
+	use_beamline="ESD_ICS_IP"
+	sigma="%s.s",
+	final="%s.fin",
+	output="%s.out",
+	magnets="%s.mag"
+	centroid="%s.cen"
+	p_central= "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=pAverage}"
+        default_order = 2
+&end
+
+&floor_coordinates
+        filename="%s.survey"
+&end
+
+&load_parameters
+        filename =esdicsfit.param
+        change_defined_values = 1
+	allow_missing_elements = 1
+&end
+
+&run_control
+&end
+
+&twiss_output 
+        matched=0
+        beta_x  = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=betax}",
+        beta_y  = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=betay}",
+        alpha_x = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=alphax}",
+        alpha_y = "{sddsanalyzebeam cryotoFODOend.out -pipe=out | sdds2stream -pipe -column=alphay}",
+        filename ="esdics.twi"
+&end
+
+&sdds_beam
+	input = "cryotoFODOend.out"
+   	input_type = "elegant"
+!	sample_interval = 10
+&end
+
+&track
+&end
+
