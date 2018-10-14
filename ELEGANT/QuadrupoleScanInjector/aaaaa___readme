@@ -1,0 +1,19 @@
+# readme to use NuScan.py
+#
+
+to run the quadupole scan do as follows:
+
+-1 run your favorite elegant setup and generate the X118 output. 
+In the present case the X118 output was generated using the 
+./workfolow run and is called injector_cryo.X118 
+  The output need to be copied in the current directory togethe with
+the lattive settings (workflow generate a paameter file called  > Spcifically,
+in my case I an ./workflow in the parent dirrector (that is in ../QuadrupoleScanInjector)
+and then do a cp ../injector_cryo.X118 .  and cp ../injector.param  .
+
+-2 open the NuScan.py and edit as you want (mainly the phase advance range,
+etc...). 
+
+-3 run NuScan.py as follow python NuScan.py the output of NuScan is nuscan.txt
+
+

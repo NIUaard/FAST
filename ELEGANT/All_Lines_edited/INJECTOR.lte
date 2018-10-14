@@ -1,0 +1,75 @@
+!
+!  this file starts at 8 m from the photocathode
+!
+!
+! General Elements
+!
+INJECTOR_SIZE:  MAXAMP, X_MAX=2.5e-2, Y_MAX=2.5e-2
+!
+! INJECTOR Drifts
+!
+d_MK_Elegant_Begin_HV106:	drift,L=0.125917
+d_HV106_GV106:	drift,L=0.078596
+d_GV106_B106:	drift,L=0.126538
+d_B106_X106:	drift,L=0.078569
+d_X106_Q106:	drift,L=0.188727
+d_Q106_Q107:	drift,L=0.034416
+d_Q107_B107:	drift,L=0.175829
+d_B107_X107:	drift,L=0.079363
+d_X107_HV107:	drift,L=0.096730
+d_HV107_Q108:	drift,L=0.088985
+d_Q108_X108:	drift,L=0.101998
+d_X108_Q109:	drift,L=0.112995
+d_Q109_X109:	drift,L=0.101985
+d_X109_Q110:	drift,L=0.112985
+d_Q110_Q111:	drift,L=0.036745
+d_Q111_HV111:	drift,L=0.044200
+d_HV111_B111:	drift,L=0.059853
+d_B111_X111:	drift,L=0.113532
+d_X111_Q112:	drift,L=0.160513
+d_Q112_Q113:	drift,L=0.033657
+d_Q113_HV113:	drift,L=0.079775
+d_HV113_X113:	drift,L=0.088783
+d_X113_B113:	drift,L=0.077736
+!
+! INJECTOR Elements
+!
+MK_Elegant_Begin:	mark
+HV106:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+GV106:	mark
+B106:	moni, group=BPM,DX=0.000000,DY=0.000000
+X106:	watch,filename="%s.X106", group=IMG
+Q106:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000, TILT=0.7853981633974483
+Q107:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000, TILT=0.7853981633974483
+B107:	moni, group=BPM,DX=0.000000,DY=0.000000
+X107:	watch,filename="%s.X107", group=IMG
+FITPT_X107:     mark, fitpoint=1
+HV107:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+Q108:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000
+X108:	watch,filename="%s.X108", group=IMG
+FITPT_X108:     mark, fitpoint=1
+Q109:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000
+X109:	watch,filename="%s.X109", group=IMG
+FITPT_X109:     mark, fitpoint=1
+Q110:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000
+Q111:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000, TILT=0.7853981633974483
+HV111:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+B111:	moni, group=BPM,DX=0.000000,DY=0.000000
+X111:	watch,filename="%s.X111", group=IMG
+FITPT_X111:     mark, fitpoint=1
+Q112:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000
+Q113:	quad,L=0.167,k1=1e-50,DX=0.000000,DY=0.000000
+HV113:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+X113:	watch,filename="%s.X113", group=IMG
+FITPT_X113:     mark, fitpoint=1
+B113:	moni, group=BPM,DX=0.000000,DY=0.000000
+
+INJECTOR:	Line=( INJECTOR_SIZE, &
+			MK_Elegant_Begin,d_MK_Elegant_Begin_HV106,HV106,d_HV106_GV106,GV106,d_GV106_B106, &
+			B106,d_B106_X106,X106,d_X106_Q106,Q106,d_Q106_Q107, &
+			Q107,d_Q107_B107,B107,d_B107_X107,X107, FITPT_X107, d_X107_HV107, &
+			HV107,d_HV107_Q108,Q108,d_Q108_X108,X108, FITPT_X108,d_X108_Q109, &
+			Q109,d_Q109_X109,X109, FITPT_X109,d_X109_Q110,Q110,d_Q110_Q111, &
+			Q111,d_Q111_HV111,HV111,d_HV111_B111,B111,d_B111_X111, &
+			X111, FITPT_X111,d_X111_Q112,Q112,d_Q112_Q113,Q113,d_Q113_HV113, &
+			HV113,d_HV113_X113,X113, FITPT_X113,d_X113_B113,B113,INJECTOR_SIZE )

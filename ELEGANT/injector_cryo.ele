@@ -1,0 +1,478 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! fit quadrupole in pre-BC1 area (same with or without BC1 turned)
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+&run_setup    
+        lattice="All_Lines_edited/LINES.lte"
+! BC1 is off
+	use_beamline="INJ_ICM"
+	default_order = 1
+        parameters = injector_preBC1.param,
+	p_central= "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=pAverage}"
+&end
+
+&run_control
+	n_steps = 1,
+!    n_indices = 1,
+&end
+
+
+&twiss_output
+        matched=0
+  	concat_order = 1,        ! for speed
+        beta_x  = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=betax}",
+        beta_y  = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=betay}",
+        alpha_x = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=alphax}",
+        alpha_y = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=alphay}",
+        filename="%s.twi"
+&end
+!
+! ---------------------------------
+!
+&alter_elements
+    name = Q106
+    item = K1
+    value = 1e-50
+&end
+&alter_elements
+    name = Q107
+    item = K1
+    value = 1e-50
+&end
+&alter_elements
+    name = Q111
+    item = K1
+    value = 1e-50
+&end
+!
+! ---------------------------------
+! ------- make all quad centered ideal case for now ----
+&alter_elements
+    name = Q*
+    item = DX
+    value = 0.0
+&end
+&alter_elements
+    name = Q*
+    item = DY
+    value = 0.0
+&end
+&alter_elements
+    name = D1*
+    item = DX
+    value = 0.0
+    allow_missing_elements=1
+&end
+&alter_elements
+    name = D1*
+    item = DY
+    value = 0.0
+    allow_missing_elements=1
+&end
+!!
+!
+!!!!!! reset intial value of quadrupoles....
+!
+!!
+&alter_elements
+    name = Q108
+    item = K1
+    value =-1
+&end
+&alter_elements
+    name = Q109
+    item = K1
+    value =1
+&end
+&alter_elements
+    name = Q110
+    item = K1
+    value =-1
+&end
+&alter_elements
+    name = Q112
+    item = K1
+    value =-1
+&end
+&alter_elements
+    name = Q113
+    item = K1
+    value =-0
+&end
+&alter_elements
+    name = Q118
+    item = K1
+    value = 0
+&end
+&alter_elements
+    name = Q119
+    item = K1
+    value =-0
+&end
+&alter_elements
+    name = Q120
+    item = K1
+    value = 2.4
+&end
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+
+&optimization_setup
+        mode = minimize, method = simplex,
+        target = 1e-12, tolerance = 1e-14,
+        n_passes = 3, n_evaluations = 1500,
+        n_restarts = 2,
+&end
+!!!!! Note
+!!!!!
+!!!  25 cm target betax works week
+
+&optimization_term
+        term = "FITPT_X118#1.betay 20. 1. sene " 
+&end       
+
+&optimization_term
+        term = "FITPT_X118#1.alphay 1 0.5 sene" 
+&end       
+
+&optimization_term
+        term = "FITPT_X118#1.betax 20. 1. sene " 
+&end
+
+&optimization_term
+        term = "FITPT_X118#1.alphax 1 0.5 sene"  
+&end       
+
+
+&optimization_term
+        term = "max.betax 60 10 segt"
+&end
+&optimization_term
+        term = "max.betay 60 10 segt"
+&end
+
+
+!
+!!!!!!!!! These are the first two and last three quadrupoles in the first compund section of Elegant, X106_D114
+!
+!! nominally Skewed
+!&optimization_variable
+!        name = Q106, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+!&end
+!! nominally Skewed
+!&optimization_variable
+!        name = Q107, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+!&end
+&optimization_variable
+        name = Q108, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q109, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q110, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+!! nominally Skewed
+!&optimization_variable
+!        name = Q111, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+!&end
+&optimization_variable
+        name = Q112, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q113, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+!
+!!!!!!!!!
+!
+
+&bunched_beam &end
+
+&optimize summarize_setup=1 &end
+
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! fit quads in the post BC1 area for match in cryomodule
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+&run_setup    
+        lattice="All_Lines_edited/LINES.lte"
+! BC1 is off
+	use_beamline="INJ_ICM"
+        parameters = injector.param,
+	default_order = 1
+	p_central= "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=pAverage}"
+	
+&end
+
+&load_parameters
+        filename = injector_preBC1.param,
+        change_defined_values = 1
+        allow_missing_parameters = 1
+&end
+
+&run_control
+	n_steps = 1,
+&end
+
+
+&twiss_output
+        matched=0
+  	concat_order = 1,        ! for speed
+        beta_x  = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=betax}",
+        beta_y  = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=betay}",
+        alpha_x = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=alphax}",
+        alpha_y = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=alphay}",
+        filename="%s.twi"
+&end
+!
+!!
+!
+!!!!!! reset intial value of quadrupoles....
+!
+!!
+&alter_elements
+    name = Q118
+    item = K1
+    value =-2.5
+&end
+&alter_elements
+    name = Q119
+    item = K1
+    value =1
+&end
+&alter_elements
+    name = Q120
+    item = K1
+    value = 1
+&end
+&alter_elements
+    name = Q126
+    item = K1
+    value = -1
+&end
+&alter_elements
+    name = Q127
+    item = K1
+    value =-1.3
+&end
+&alter_elements
+    name = Q128
+    item = K1
+    value = 1.1
+&end
+!!
+!
+!!!!!! set the linac field....
+!! VOLTNOM 12.03050E+0006
+&alter_elements
+    name = CAVE
+    item = VOLT
+    value = "(26.500000e6 0.11797 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV1
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV2
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV3
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV4
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+
+!
+!!
+!
+!
+&optimization_setup
+        mode = minimize, method = simplex,
+        target = 1e-12, tolerance = 1e-14,
+        n_passes = 3, n_evaluations = 1500,
+        n_restarts = 2,
+&end
+!!!!! Note
+!!!!!
+!!!  25 cm target betax works wekk
+
+&optimization_term
+        term = "betay 25 1 sene" 
+&end       
+
+&optimization_term
+        term = "alphay -2 1e-2 sene" 
+&end       
+
+&optimization_term
+        term = "betax 25 1 sene" 
+&end
+
+&optimization_term
+        term = "alphax -2 2e-2 sene" 
+&end       
+
+
+&optimization_term
+        term = "max.betax 80 10 segt"
+&end
+&optimization_term
+        term = "max.betay 80 10 segt"
+&end
+
+
+!
+!!!!!!!!! These are the first two and last three quadrupoles in the first compund section of Elegant, X106_D114
+!
+&optimization_variable
+        name = Q118, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q119, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q120, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q126, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q127, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+&optimization_variable
+        name = Q128, item=K1, lower_limit=-30, upper_limit=30, step_size = 0.01
+&end
+!
+!!!!!!!!!
+!
+
+
+&floor_coordinates
+     filename="%s.survey"
+&end
+
+
+&bunched_beam 
+&end
+
+&optimize summarize_setup=1 &end
+
+&save_lattice filename = %s.iter2 &end
+!
+
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! now run the full thing 
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+&run_setup
+        lattice="All_Lines_edited/LINES.lte"
+! BC1 is off
+	use_beamline="INJ_ICM"
+	default_order = 1
+	sigma="%s.s",
+	final="%s.fin",
+	output="cryomodule_end.out",
+	magnets="%s.mag"
+	centroid="%s.cen"
+	p_central= "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=pAverage}"
+&end
+
+&load_parameters
+        filename = injector.param,
+        change_defined_values = 1
+        allow_missing_parameters = 1
+&end
+
+!
+!!!!!! set the linac field....
+!! VOLTNOM 12.03050E+0006
+&alter_elements
+    name = CAVE
+    item = VOLT
+    value = "(26.500000e6 0.11797 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV1
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV2
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV3
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+&alter_elements
+    name = CAV4
+    item = VOLT
+    value = "(26.500000e6 0.11543 * 0.9665 *)"
+&end
+
+!
+!!
+
+&run_control
+&end
+
+&matrix_output
+	printout ="%s.matext"
+	printout_order = 2
+	SDDS_output="%s.mat"
+	SDDS_output_order=2
+	full_matrix_only=1
+&end
+
+&twiss_output
+        matched=0
+  	concat_order = 1,        ! for speed
+        beta_x  = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=betax}",
+        beta_y  = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=betay}",
+        alpha_x = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=alphax}",
+        alpha_y = "{sddsanalyzebeam daniel_fort50_8m.sdds -pipe=out | sdds2stream -pipe -column=alphay}",
+        filename="injector.twi"
+&end
+
+&floor_coordinates
+        filename="%s.survey"
+        include_vertices = 1
+        magnet_centers = 1    
+&end
+
+&sdds_beam
+	input = "daniel_fort50_8m.sdds"
+   	input_type = "elegant"
+!	sample_interval = 10
+&end
+
+&track
+&end
+
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+
+

@@ -1,0 +1,35 @@
+ TTF FEL L-Band 1.5cell Photocathode Gun with Coaxial coupler
+; modified per PITZ benchmark problem (Philippe 03/16/2006)
+ &reg kprob=1,
+ icylin=1,
+ mode=0,
+ npeg=13, 
+ nbslo=0,
+ nbsup=1,
+ nbslf=1,
+ nbsrt=1,
+ dx=0.05,
+ freq=1300,npoint=25, xdri=12.5,ydri=9.0098 &
+ &po x=0., y=0. &
+ &po x=0., y=8.50 &
+ &po nt=2, x0=0.5, y0=8.5148, r=0.5, theta=90. &
+ &po x=5., y=9.0148 &
+ &po nt=2, x0=5, y0=8.5148, r=0.5, theta=0. &
+ &po x=5.5, y=3.5 &
+ &po nt=2, x0=6.5, y0=3.5, r=1.0, theta=270. &
+ &po nt=2, x0=6.5, y0=3.5, r=1.0, theta=0. &
+ &po x=7.5, y=8.5488 &
+ &po nt=2, x0=8., y0=8.5488, r=0.5, theta=90. &
+ &po x=17., y=9.0488 &
+ &po nt=2, x0=17., y0=8.5488, r=0.5, theta=0. &
+ &po x=17.5, y=4.0 &
+ &po nt=2, x0=18.5, y0=4.0, r=1., theta=315. &
+ &po x=21.4, y=5 &
+ &po x=26.5, y=5 &
+ &po x=26.5, y=2.175 &
+ &po x=21.5, y=2.175 &
+ &po nt=2, x0=21.5, y0=1.925, r=.25, theta=180. &
+ &po nt=2, x0=21.5, y0=1.925, r=.25, theta=270. &
+ &po x=26.5, y=1.675 &
+ &po x=26.5, y=0. &
+ &po x=0., y=0. &

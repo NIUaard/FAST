@@ -1,0 +1,55 @@
+!
+! General Elements
+!
+BC1_SIZE:  MAXAMP, X_MAX=2.5e-2, Y_MAX=2.5e-2
+!
+! BC1 Drifts
+!
+d_D114_B114:	drift,L=0.254474
+d_B114_HV114:	drift,L=0.029015
+d_HV114_Q114:	drift,L=0.043613
+d_Q114_D115:	drift,L=0.302577
+d_D115_B115:	drift,L=0.250891
+d_B115_X115:	drift,L=0.200977
+d_X115_Q115:	drift,L=0.087747
+d_Q115_D116:	drift,L=0.289836
+d_D116_Q116:	drift,L=0.297854
+d_Q116_HV116:	drift,L=0.039896
+d_HV116_B116:	drift,L=0.035885
+d_B116_D117:	drift,L=0.254955
+!
+! BC1 Elements
+!
+FITPT_BC1_Begin:	mark, fitpoint=1
+D114:	sbend,L=0.264687, &
+		angle=0.314159, hgap=0.058000, fint=0.370000, &
+		e1=0.157080, e2=0.157080, tilt=0.000000
+B114:	moni, group=BPM,DX=-0.001306,DY=0.000545
+HV114:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+Q114:	quad,L=0.128,k1=1e-50,DX=0.000079,DY=0.000232
+D115:	sbend,L=0.264687, &
+		angle=-0.314159, hgap=0.058000, fint=0.370000, &
+		e1=-0.157080, e2=-0.157080, tilt=0.000000
+B115:	moni, group=BPM,DX=0.000016,DY=0.000719
+FITPT_BC1_Mid:	mark, fitpoint=1
+X115:	watch,filename="%s.X115", group=IMG
+Q115:	quad,L=0.128,k1=1e-50,DX=0.000096,DY=-0.000190
+D116:	sbend,L=0.264687, &
+		angle=-0.314159, hgap=0.058000, fint=0.370000, &
+		e1=-0.157080, e2=-0.157080, tilt=0.000000
+FITPT_BC1_third:	mark, fitpoint=1
+Q116:	quad,L=0.128,k1=1e-50,DX=0.000451,DY=-0.000305
+HV116:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+B116:	moni, group=BPM,DX=0.000532,DY=-0.000845
+D117:	sbend,L=0.264687, &
+		angle=0.314159, hgap=0.058000, fint=0.370000, &
+		e1=0.157080, e2=0.157080, tilt=0.000000
+FITPT_BC1_End:	mark, fitpoint=1
+
+BC1:	Line=( BC1_SIZE, &
+			FITPT_BC1_Begin,D114,d_D114_B114,B114,d_B114_HV114, &
+			HV114,d_HV114_Q114,Q114,d_Q114_D115,D115,d_D115_B115, &
+			B115,d_B115_X115,FITPT_BC1_Mid,X115,d_X115_Q115, &
+			Q115,d_Q115_D116,D116,d_D116_Q116,FITPT_BC1_third, Q116, &
+			d_Q116_HV116,HV116,d_HV116_B116,B116,d_B116_D117,D117, &
+			FITPT_BC1_End,BC1_SIZE )

@@ -1,0 +1,58 @@
+! Include the individual lattice files.
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/INJECTOR.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/BC1.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/CBY.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/LEX.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/LED.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/PCM.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/ICM.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/ACM.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/ESD_ICS.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/EID.lte"
+#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/EPD.lte"
+! Line Connection Drifts
+d_INJ_CBY:	drift,L=1.574961
+d_CBY_LEX:	drift,L=2.368459
+d_INJ_BC1:	drift,L=0.259966
+d_BC1_LEX:	drift,L=0.327761
+d_LEX_LED:	drift,L=0.187896
+d_LEX_PCM:	drift,L=0.805750
+d_PCM_ICM:	drift,L=1.442633
+d_ICM_ACM:	drift,L=1.476957
+d_ACM_ESD:	drift,L=1.916566
+d_ACM_EID:	drift,L=1.916566
+d_EID_EPD:	drift,L=0.219345
+
+! Line Definitions
+INJ_LEX:	Line=( INJECTOR,d_INJ_CBY,CBY,d_CBY_LEX,LEX )
+INJ_LED:	Line=( INJ_LEX,d_LEX_LED,LED )
+
+
+! ---------- Common lines
+
+ACM_to_EIDstart: Line=( ACM, d_ACM_EID )
+ACM_EID_to_dump: Line=( ACM, d_ACM_EID )
+EID_EPD:         Line=( EID, d_EID_EPD, EPD) 
+
+! ---------- BC1 on lines 
+INJ_BC1_PCM:	 Line=( INJECTOR,d_INJ_BC1,BC1,d_BC1_LEX,LEX,d_LEX_PCM, PCM )
+INJ_BC1_ICM:	 Line=( INJ_BC1_PCM, d_PCM_ICM,ICM, d_ICM_ACM )
+INJ_BC1_ACM:	 Line=( INJ_BC1_ICM, ACM )
+INJ_BC1_EID:	 Line=( INJ_BC1_ACM, d_ACM_EID, EID )
+INJ_BC1_EPD:	 Line=( INJ_BC1_EID, d_EID_EPD, EPD )
+! to low energy dump
+INJ_BC1_LEX_LED:	Line=( INJECTOR,d_INJ_BC1,BC1,d_BC1_LEX,LEX,d_LEX_LED,LED )
+INJ_BC1_LEX:	Line=( INJECTOR,d_INJ_BC1,BC1,d_BC1_LEX,LEX,d_LEX_LED )
+
+! ---------- BC1 off lines 
+INJ_PCM:	 Line=( INJECTOR,d_INJ_CBY,CBY,d_CBY_LEX,LEX,d_LEX_PCM, PCM )
+INJ_ICM:	 Line=( INJ_PCM, d_PCM_ICM,ICM, d_ICM_ACM )
+INJ_ACM:	 Line=( INJ_ICM, ACM )
+! go to dump via D600-D604
+INJ_EID:	 Line=( INJ_ACM, d_ACM_EID, EID )
+INJ_EPD:	 Line=( INJ_EID, d_EID_EPD, EPD )
+! go to dump via D700-7604
+INJ_ESD:	 Line=( INJ_ACM, d_ACM_ESD, ESD_ICS )
+! go to ICS
+INJ_ICS:	 Line=( INJ_ACM, d_ACM_ESD, ESD_ICS_IP )
+INJ_ICS2:	 Line=( INJ_ACM, d_ACM_ESD, ESD_ICS_IP2 )

@@ -1,0 +1,31 @@
+!
+! General Elements
+!
+LED_SIZE:  MAXAMP, X_MAX=2.5e-2, Y_MAX=2.5e-2
+!
+! LED Drifts
+!
+d_D122_B123:	drift,L=0.378056
+d_B123_X124:	drift,L=0.220374
+d_X124_HV124:	drift,L=0.310560
+d_HV124_B124:	drift,L=0.344755
+d_B124_T124:	drift,L=0.089356
+d_T124_W124:	drift,L=0.739329
+!
+! LED Elements
+!
+D122:	sbend,L=0.265301, &
+		angle=0.392699, hgap=0.058000, fint=0.370000, &
+		e1=0.196350, e2=0.196350, tilt=-1.570796
+!,DX=-0.000350,DY=0.000214
+B123:	moni, group=BPM,DX=0.000289,DY=0.001237
+X124:	watch,filename="%s.X124", group=IMG
+HV124:	kicker, hkick=0.000000, vkick=0.000000, group=CORR
+B124:	moni, group=BPM,DX=-0.000029,DY=0.001987
+T124:	mark
+W124:	mark
+
+LED:	Line=( LED_SIZE, &
+			D122,d_D122_B123,B123,d_B123_X124,X124,d_X124_HV124, &
+			HV124,d_HV124_B124,B124,d_B124_T124,T124,d_T124_W124, &
+			W124,LED_SIZE )
