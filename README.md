@@ -4,7 +4,7 @@ high-energy dump.
 
 The ASTRA input files describe the beam generation and acceleration to ~40 MeV
 corresponding to z from 0 (photocathode surface) to z=8 m (downstream of the
-second SRF  cavity). A description of the injector can be found in http://accelconf.web.cern.ch/AccelConf/IPAC10/papers
+second SRF  cavity). A description of the injector can be found in http://accelconf.web.cern.ch/AccelConf/IPAC10/papers/thpd020.pdf
 (note that CAV39 is not anymore part of the nominal setup). 
 
 The ELEGANT input files provides the beamline configuration from z=8 up to the
