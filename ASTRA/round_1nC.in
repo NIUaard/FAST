@@ -1,0 +1,116 @@
+&NEWRUN
+  Head='ASTA injector -- cathode to X106 -- PP-NOV-2015'
+  Version=3
+  RUN=1,
+  Loop=F, NLoop=0
+  Distribution = 'radial10k_1G.ini', Xoff=0.0, Yoff=0.0
+  EmitS=.T
+  C_Emits=.T
+  Lsub_rot=.F  
+  Lsub_cor=.F
+  PhaseS=.T
+  RefS=.T
+  TcheckS=.F
+  CathodeS=.T,
+  TrackS=.F, TRACK_ALL=.T, PHASE_SCAN=.F, AUTO_PHASE=.T
+  Larmors=.T
+  H_max=0.005
+  H_min=0.0005
+  qbunch=1.00
+  XYrms=0.59877557111820989
+/
+
+&OUTPUT
+  ZSTART=0.0
+  ZSTOP= 8.41  ! this is X106 11/24/2015
+  Zemit=500
+  Zphase=1
+  Local_Emit=.F
+  High_res=.T
+  Sigmas=.T
+! ------------  beam density monitor --------------
+  Screen(1) = 0.50  ! after gun 
+  Screen(2) = 4.15  ! after CC1
+  Screen(3) = 6.20  ! after CC2
+  Screen(4) = 8.20  ! location of elegant start point
+/
+
+
+&SCAN
+  LScan=.F
+  Scan_para='XYrms'
+  S_min=0.1, S_max=2.0 S_numb=10
+  FOM(1)='bunch charge',
+  FOM(2)='mean energy'
+  FOM(3)='rms energy',
+  FOM(4)='hor spot'
+  FOM(5)='ver spot'
+  FOM(6)='hor emit'
+  FOM(7)='ver emit'
+  FOM(8)='bunch length'
+/
+
+&MODULES
+/
+
+&ERROR
+/
+
+&CHARGE
+  LSPCH=.T
+  Max_scale=0.1 
+  Max_Count = 100
+! 2D space charge (used when LSPCH=T)
+  Nrad=7,
+  Nlong_in=11
+  Cell_var=2.0
+  min_grid=0.0D-6
+  Lmirror=.T
+  Linert=.F
+! 3D space charge (used when LSPCH=T and LSPCH3d=T)
+  LSPCH3D=.F
+  Nxf=32, Nyf=32, Nzf=32
+  Smooth_x=1
+  Smooth_y=1
+  Smooth_z=1
+/
+
+&CSR
+/ 
+
+&Aperture 
+  LAPERT=.F
+  File_Aperture ='asta.aperture' 
+/ 
+ 
+&CAVITY
+  Loop=.F,
+  LEfield=.T
+  File_Efield(1) = 'rfgun_SF2013.dat', C_smooth(1)=20, C_HIGHER_ORDER(1)=.F
+  Nue(1)=1.3,   MaxE(1)=40,   
+  Phi(1)= 2.2541906413514976, C_pos(1)=0.0,
+  File_Efield(2) = 'tesla_SF2013.dat', C_smooth(2)=20,  C_HIGHER_ORDER(2)=.F
+  Nue(2)=1.3,   MaxE(2)= 34.286661490842263,   
+  Phi(2)= 0.0, C_pos(2)=2.7976,
+  File_Efield(3) = 'tesla_SF2013.dat', C_smooth(3)=20,  C_HIGHER_ORDER(3)=.F
+  Nue(3)=1.3,   MaxE(3)= 44.0,   
+  Phi(3)= 0.0, C_pos(3)=5.5008,
+/
+
+
+&SOLENOID
+  Loop=.T,
+  LBfield=.T
+  File_Bfield(1)='fastbothsol_main100A.dat'
+!  solasblt_cath0Bm100A.dat',
+  MaxB(1)=0.17765710979201543, S_smooth(1)=20, 
+  S_pos(1)=0.00
+/
+
+&QUADRUPOLE
+  Loop=.F
+  Lquad=.F
+/
+ 
+&DIPOLE 
+/

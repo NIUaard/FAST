@@ -1,15 +1,15 @@
 ! Include the individual lattice files.
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/INJECTOR.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/BC1.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/CBY.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/LEX.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/LED.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/PCM.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/ICM.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/ACM.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/ESD_ICS.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/EID.lte"
-#INCLUDE: "/xdata/piot/FAST_Simu/Elegant/Elegant_Current/All_Lines_edited/EPD.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/INJECTOR.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/BC1.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/CBY.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/LEX.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/LED.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/PCM.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/ICM.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/ACM.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/ESD_ICS.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/EID.lte"
+#INCLUDE: "/bdata/piot/FAST-IOTA/GIT_repo/FAST/ELEGANT/All_Lines_edited/EPD.lte"
 ! Line Connection Drifts
 d_INJ_CBY:	drift,L=1.574961
 d_CBY_LEX:	drift,L=2.368459
@@ -56,3 +56,4 @@ INJ_ESD:	 Line=( INJ_ACM, d_ACM_ESD, ESD_ICS )
 ! go to ICS
 INJ_ICS:	 Line=( INJ_ACM, d_ACM_ESD, ESD_ICS_IP )
 INJ_ICS2:	 Line=( INJ_ACM, d_ACM_ESD, ESD_ICS_IP2 )
+INJ_ICS3:        Line=( INJ_ACM, d_ACM_ESD, ESD_ICS_IP3 )

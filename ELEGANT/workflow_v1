@@ -1,0 +1,14 @@
+./clean_directory
+elegant injector_cryo.ele
+elegant cryotoFODOend.ele
+elegant FODO_to_IP.ele
+elegant ICSIP_to_Dump.ele
+elegant track_injector_ICSIP_Dump.ele
+
+sddsplot -graph=line,vary -legend -col=s,"beta?" injector.twi  
+sddsplot -graph=line,vary -legend -col=s,"beta?" acm.twi
+sddsplot -graph=line,vary -legend -col=s,beta? FODO_to_IP.twi
+sddsplot -graph=line,vary -legend -col=s,etax ICSIP_to_Dump.twi
+sddsplot -graph=line,vary -legend -col=s,beta? ICSIP_to_Dump.twi
+sddsplot -graph=line,vary -toptitle -title="Interation Point Close-up" -legend -scale=108.8,111,0,0 -col=s,beta? track_injector_ICSIP_Dump.twi
+sddsplottwiss track_injector_ICSIP_Dump 160 -limit=ymax=210

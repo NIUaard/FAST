@@ -1,0 +1,20 @@
+ &INPUT
+  Add=.F,
+  FNAME = 'radial200k_1G.ini'
+  IPart=200001
+  Species='electrons'
+  Probe=.True.
+  Noise_reduc=.T.
+  Cathode=.T.
+  Q_total=0.5
+  Ref_zpos=0.
+  Ref_clock=0E-3
+  Ref_Ekin=0.
+  Dist_z='g',  sig_clock=3E-3, Lt=0., rt=0.
+  Dist_pz='i', LE=0.550E-03
+!  Dist_pz='g',  sig_Ekin=0.0E0,  emit_z=0.00E0 ,    cor_Ekin=0.E0
+  Dist_x='radial',  sig_x=1.0
+  Dist_px='r', Nemit_x=0.,   cor_px=0.0E0
+  Dist_y='r' , 
+  Dist_py='r', Nemit_y=0.,   cor_py=0.0E0
+ /
